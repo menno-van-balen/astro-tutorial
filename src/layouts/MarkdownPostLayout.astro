@@ -1,0 +1,65 @@
+---
+import BaseLayout from "./BaseLayout.astro";
+const { frontmatter } = Astro.props;
+---
+<style>
+  header {
+    text-align: center;
+  }
+
+  .hero-img {
+    max-width: 80%;
+    margin: auto;
+    text-align: center;
+  }
+
+  .author {
+    text-align: right;
+    line-height: 0.5em;
+    font-size: small;
+    margin: 2em;
+  }
+
+  a {
+    color: #00539F;
+  }
+  
+  .tags {
+    width: 100%;
+    display: flex; 
+    flex-wrap: wrap; 
+    margin: 0 auto;
+  }
+
+  .tag {
+    margin: 0.25em;
+    border: dotted 1px #a1a1a1;
+    border-radius: .5em;
+    padding: .5em 1em;
+    font-size: 1.15em;
+    background-color: #F8FCFD;
+  }
+</style>
+
+<BaseLayout pageTitle={frontmatter.title}>
+  <header>
+    <p><em>{frontmatter.description}</em></p>
+    <div class="author">
+      <p><em>Written by:</em> {frontmatter.author}</p>
+      <p><em>Published on:</em> {frontmatter.pubDate.slice(0,10)}</p>
+    </div>
+    <img src={frontmatter.image.url} alt={frontmatter.image.alt} width="600" class="hero-img">
+  </header>
+
+  <article>
+    <slot />
+  </article>
+
+  <aside>
+    <div class="tags">
+      {frontmatter.tags.map((tag) => (
+        <p class="tag"><a href={`/tags/${tag}`}>{tag}</a></p>
+      ))}
+    </div>
+  </aside>
+</BaseLayout>
